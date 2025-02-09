@@ -62,7 +62,7 @@ export default function MarkdownInput() {
         {isPreviewMode ? (
           mounted ? (
             <div
-              className={`markdown p-4 border rounded-md w-full h-full overflow-auto `}
+              className={`markdown p-4 rounded-md w-full h-full overflow-auto `}
             >
               <ReactMarkdown
                 remarkPlugins={[remarkBreaks]}
