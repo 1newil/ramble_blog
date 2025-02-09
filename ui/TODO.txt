@@ -1,0 +1,32 @@
+markdown editor 
+    - submit banner (SUCCESS/FAILURE) 
+    - thumbnail url DONE
+    - add images DONE
+
+view one blog 
+    - dynamic route DONE
+    - breadcrumbs 
+    - comments
+
+view all
+
+home page 
+    - limit blog retrieval to latest 10 (or 5?) DONE
+
+blogs 
+    - add tags to model
+
+static pages 
+    - about DONE
+    - contact (REMOVED)
+
+auth (OPTIONAL)
+    - admin can access markdown editor 
+    - guests can sign up to comment
+
+misc DONE
+    - favicon 
+    - page title
+
+deployment DONE
+    - deploy the damn thing
