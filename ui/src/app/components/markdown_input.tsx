@@ -30,17 +30,20 @@ export default function MarkdownInput() {
     <div
       className={`border-2 rounded-lg shadow-md p-6 flex flex-col h-screen overflow-hidden`}
     >
+      {/* <div className="flex space-x-2 items-center mb-4 border-b-2 pb-3 ">
+        <label>Post Title: </label>
+        <input type="text"></input>
+      </div> */}
       {/* Header Section */}
       <div
         className={`flex justify-between items-center mb-4 border-b-2 pb-3 `}
       >
-        <h2 className={`text-lg font-semibold`}>Markdown Editor</h2>
         <div className="space-x-2">
           <Button
             onClick={togglePreviewMode}
             disabled={!isPreviewMode}
             className={`${
-              isPreviewMode ? "bg-blue-500" : "bg-gray-500"
+              !isPreviewMode ? "bg-gray-900" : "bg-gray-500"
             } text-white`}
           >
             Edit
@@ -49,20 +52,21 @@ export default function MarkdownInput() {
             onClick={togglePreviewMode}
             disabled={isPreviewMode}
             className={`${
-              !isPreviewMode ? "bg-blue-500" : "bg-gray-500"
+              isPreviewMode ? "bg-gray-900" : "bg-gray-500"
             } text-white`}
           >
             Preview
           </Button>
         </div>
+        <h2 className={`text-lg font-semibold`}>Markdown Editor</h2>
       </div>
 
       {/* Content Section */}
-      <div className={`border-2 rounded-lg flex-grow overflow-auto p-4 flex`}>
+      <div className={`border-2 rounded-lg flex-grow overflow-auto p-2 flex`}>
         {isPreviewMode ? (
           mounted ? (
             <div
-              className={`markdown p-4 rounded-md w-full h-full overflow-auto `}
+              className={`markdown p-4 border rounded-md w-full h-full overflow-auto `}
             >
               <ReactMarkdown
                 remarkPlugins={[remarkBreaks]}

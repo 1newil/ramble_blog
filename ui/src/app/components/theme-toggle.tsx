@@ -22,17 +22,11 @@ const ThemeToggle = () => {
       />
     );
   return (
-    <button className="p-2 rounded-full transition-colors duration-300 bg-gray-200 dark:bg-gray-700">
+    <button className="p-2 rounded-full transition-colors duration-300">
       {resolvedTheme === "dark" ? (
-        <SunIcon
-          onClick={() => setTheme("light")}
-          className="w-4 h-4 text-black"
-        />
+        <SunIcon onClick={() => setTheme("light")} className="w-4 h-4 " />
       ) : (
-        <MoonIcon
-          onClick={() => setTheme("dark")}
-          className="w-4 h-4 text-gray-900"
-        />
+        <MoonIcon onClick={() => setTheme("dark")} className="w-4 h-4 " />
       )}
     </button>
   );
