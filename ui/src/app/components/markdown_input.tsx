@@ -13,9 +13,10 @@ import {
   atomDark,
   prism,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { SubmitButton } from "./submitButton";
 
 export default function MarkdownInput() {
-  const [text, setText] = useState("\n".repeat(29));
+  const [text, setText] = useState("\n".repeat(19));
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
@@ -51,7 +52,7 @@ export default function MarkdownInput() {
             Preview
           </Button>
         </div>
-        <h2 className={`text-lg font-semibold`}>Markdown Editor</h2>
+        <SubmitButton body={text} />
       </div>
 
       {/* Content Section */}

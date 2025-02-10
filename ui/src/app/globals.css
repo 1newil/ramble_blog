@@ -20,7 +20,7 @@
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 85%;
+    --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --chart-1: 12 76% 61%;
@@ -31,32 +31,42 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 218 30% 7%; /* Softer dark gray */
-    --foreground: 220 10% 92%; /* Brighter text for readability */
-    --card: 220 10% 12%;
-    --card-foreground: 220 10% 95%;
-    --popover: 220 10% 12%;
-    --popover-foreground: 220 10% 95%;
-    --primary: 220 10% 88%; /* Light gray primary text */
-    --primary-foreground: 220 10% 15%; /* Darker foreground */
-    --secondary: 220 10% 20%;
-    --secondary-foreground: 220 10% 85%;
-    --muted: 220 10% 25%;
-    --muted-foreground: 220 10% 80%;
-    --accent: 220 10% 30%;
-    --accent-foreground: 220 10% 90%;
-    --destructive: 0 60% 45%;
-    --destructive-foreground: 220 10% 95%;
-    --border: 220 10% 35%;
-    --input: 220 10% 40%;
-    --ring: 220 10% 50%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
 
-    /* Improved Chart Colors */
-    --chart-1: 200 70% 60%;
-    --chart-2: 160 60% 55%;
-    --chart-3: 30 80% 65%;
-    --chart-4: 280 65% 70%;
-    --chart-5: 340 75% 65%;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .markdown > * {
+    all: revert;
   }
 }
 

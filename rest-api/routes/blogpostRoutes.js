@@ -15,7 +15,8 @@ router.get("/", async (_, res) => {
 router.post("/", async (req, res) => {
   console.log(req.body);
   try {
-    const { title, markdownContent, thumbnailUrl } = req.body;
+    let { title, markdownContent, thumbnailUrl } = req.body.payload;
+    markdownContent = markdownContent.body;
     const newPost = new BlogPost({ title, markdownContent, thumbnailUrl });
     await newPost.save();
     res.status(201).json(newPost);
