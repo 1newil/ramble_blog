@@ -60,18 +60,6 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  .markdown > * {
-    all: revert;
-  }
-}
-
 @layer components {
   .next-light {
     --background: #ffffff;
