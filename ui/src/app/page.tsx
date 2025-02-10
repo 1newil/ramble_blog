@@ -5,7 +5,7 @@ import MarkdownInput from "@/app/components/markdown_input";
 
 export default function Home() {
   return (
-    <div className={`min-h-screen p-8 transition-colors`}>
+    <div className={`transition-colors`}>
       <MarkdownInput />
     </div>
   );

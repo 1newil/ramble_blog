@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import { Textarea } from "./ui/textarea";
 import remarkBreaks from "remark-breaks";
+import CodeMirror from "@uiw/react-codemirror";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
+import { EditorView } from "@codemirror/view";
+import { githubLight, githubDark } from "@uiw/codemirror-theme-github";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import {
   atomDark,
@@ -13,46 +15,37 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export default function MarkdownInput() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("\n".repeat(29));
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
-
+  const customStyles = EditorView.theme({
+    ".cm-activeLine": { backgroundColor: "transparent !important" }, // Removes highlight
+    ".cm-gutters": { backgroundColor: "#0d1118" }, // Line number gutter color
+  });
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const togglePreviewMode = () => {
-    setIsPreviewMode(!isPreviewMode);
-  };
-
   return (
     <div
-      className={`border-2 rounded-lg shadow-md p-6 flex flex-col h-screen overflow-hidden`}
+      className={`border-2 rounded-lg shadow-md p-6 flex flex-col overflow-hidden`}
     >
-      {/* <div className="flex space-x-2 items-center mb-4 border-b-2 pb-3 ">
-        <label>Post Title: </label>
-        <input type="text"></input>
-      </div> */}
       {/* Header Section */}
-      <div
-        className={`flex justify-between items-center mb-4 border-b-2 pb-3 `}
-      >
+      <div className={`flex justify-between items-center mb-4 border-b-2 pb-3`}>
         <div className="space-x-2">
           <Button
-            onClick={togglePreviewMode}
-            disabled={!isPreviewMode}
+            onClick={() => setIsPreviewMode(false)}
             className={`${
-              !isPreviewMode ? "bg-gray-900" : "bg-gray-500"
+              !isPreviewMode ? "bg-gray-800" : "bg-gray-500"
             } text-white`}
           >
             Edit
           </Button>
           <Button
-            onClick={togglePreviewMode}
-            disabled={isPreviewMode}
+            onClick={() => setIsPreviewMode(true)}
             className={`${
-              isPreviewMode ? "bg-gray-900" : "bg-gray-500"
+              isPreviewMode ? "bg-gray-800" : "bg-gray-500"
             } text-white`}
           >
             Preview
@@ -66,7 +59,8 @@ export default function MarkdownInput() {
         {isPreviewMode ? (
           mounted ? (
             <div
-              className={`markdown p-4 border rounded-md w-full h-full overflow-auto `}
+              className={`markdown p-4 border rounded-md w-full `}
+              style={{ maxHeight: "100%" }}
             >
               <ReactMarkdown
                 remarkPlugins={[remarkBreaks]}
@@ -84,8 +78,6 @@ export default function MarkdownInput() {
                           fontSize: "0.875rem",
                           padding: "1rem",
                           borderRadius: "6px",
-                          // backgroundColor:
-                          //   theme === "dark" ? "#1e1e1e" : "#f5f5f5",
                           overflow: "auto",
                           maxHeight: "100%",
                         }}
@@ -107,31 +99,18 @@ export default function MarkdownInput() {
             <p className={`text-gray-500`}>Loading preview...</p>
           )
         ) : (
-          <div className="relative flex w-full h-full">
-            {/* Line Numbers Container */}
-            <div
-              className={`px-3 py-2 text-right text-sm select-none`}
-              style={{ width: "40px", minWidth: "40px" }} // Fixed width for alignment
-            >
-              {text.split("\n").map((_, i) => (
-                <div key={i} className="leading-0">
-                  {i + 1}
-                </div>
-              ))}
-            </div>
-
-            {/* Textarea Container */}
-            <div className="flex-grow">
-              <Textarea
+          <div className="w-full overflow-auto">
+            {mounted ? (
+              <CodeMirror
+                theme={theme === "dark" ? githubDark : githubLight}
                 value={text}
-                onChange={(event) => setText(event.target.value)}
-                className={`w-full h-full border-none p-2 resize-none overflow-auto`}
-                placeholder="Write your markdown here..."
-                style={{
-                  paddingLeft: "10px",
-                }}
+                onChange={(value) => setText(value)}
+                extensions={[customStyles]}
+                placeholder={`# Write your markdown here...`}
               />
-            </div>
+            ) : (
+              <p className="text-gray-500">Loading editor...</p>
+            )}
           </div>
         )}
       </div>

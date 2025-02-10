@@ -20,7 +20,7 @@
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
+    --border: 0 0% 85%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --chart-1: 12 76% 61%;
@@ -31,7 +31,7 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 220 10% 10%; /* Softer dark gray */
+    --background: 218 30% 7%; /* Softer dark gray */
     --foreground: 220 10% 92%; /* Brighter text for readability */
     --card: 220 10% 12%;
     --card-foreground: 220 10% 95%;
