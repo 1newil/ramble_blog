@@ -15,22 +15,13 @@ export default function Header() {
       </div>
       <div className="flex flex-row space-x-8 items-center">
         <nav className="space-x-4">
-          <Link
-            href="/"
-            className={`hover:text-black hover:underline hover:underline-red `}
-          >
+          <Link href="/" className={`hover:underline`}>
             Home
           </Link>
-          <Link
-            href="/about"
-            className={`hover:text-black hover:underline hover:underline-red `}
-          >
+          <Link href="/about" className={`hover:underline`}>
             About
           </Link>
-          <Link
-            href="/contact"
-            className={`hover:text-black hover:underline hover:underline-red `}
-          >
+          <Link href="/contact" className={` hover:underline`}>
             Contact
           </Link>
         </nav>

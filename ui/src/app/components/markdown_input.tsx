@@ -31,13 +31,19 @@ export default function MarkdownInput() {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className={`border-2 rounded-lg p-2 mb-2`}
-      />
+      <div className="flex flex-col">
+        <label htmlFor="title" className="text-sm font-medium text-gray-500">
+          Title
+        </label>
+        <input
+          type="text"
+          id="title"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className={`border-2 rounded-lg p-2 mb-2 max-w-sm`}
+        />
+      </div>
       <div
         className={`border-2 rounded-lg shadow-md p-4 flex flex-col overflow-hidden`}
       >
@@ -63,7 +69,12 @@ export default function MarkdownInput() {
               Preview
             </Button>
           </div>
-          <SubmitButton body={text} title={title} />
+          <SubmitButton
+            body={text}
+            title={title}
+            setText={setText}
+            setTitle={setTitle}
+          />
         </div>
 
         {/* Content Section */}
@@ -110,24 +121,22 @@ export default function MarkdownInput() {
             ) : (
               <p className={`text-gray-500`}>Loading preview...</p>
             )
-          ) : (
+          ) : mounted ? (
             <div
               className={`w-full overflow-auto min-h-96 ${
                 theme === "dark" ? "CODEMIRROR_CONTAINER" : ""
               }`}
             >
-              {mounted ? (
-                <CodeMirror
-                  theme={theme === "dark" ? githubDark : githubLight}
-                  value={text}
-                  onChange={(value) => setText(value)}
-                  extensions={[customStyles]}
-                  placeholder={`# Write your markdown here...`}
-                />
-              ) : (
-                <p className="text-gray-500">Loading editor...</p>
-              )}
+              <CodeMirror
+                theme={theme === "dark" ? githubDark : githubLight}
+                value={text}
+                onChange={(value) => setText(value)}
+                extensions={[customStyles]}
+                placeholder={`# Write your markdown here...`}
+              />
             </div>
+          ) : (
+            <p className="text-gray-500">Loading editor...</p>
           )}
         </div>
       </div>
