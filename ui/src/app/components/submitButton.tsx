@@ -1,37 +1,31 @@
 import React from "react";
 import { Button } from "./ui/button";
-
+import { post } from "@/app/actions/blogActions";
 interface SubmitButtonProps {
   body: string;
+  title: string;
+  thumbnailUrl?: string;
 }
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({ body }) => {
-  console.log("SubmitButtonProps: ", body);
-  const handleClick = async (body: SubmitButtonProps) => {
-    // Invoke server action here
-
+export const SubmitButton: React.FC<SubmitButtonProps> = ({
+  body,
+  title,
+  thumbnailUrl,
+}) => {
+  const handleClick = async () => {
     const payload = {
-      title: "Title",
+      title: title,
       markdownContent: body,
       thumbnailUrl:
-        "https://images.freeimages.com/variants/vyCXSWUjnrmHnfVvU3cu2tNV/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d?fmt=webp&w=500",
+        thumbnailUrl ||
+        "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",
     };
-    try {
-      const response = await fetch("http://localhost:4000/api/blogs", {
-        method: "POST",
-        body: JSON.stringify({ payload }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log("data: ", data);
-      return data;
-      // Handle response
-    } catch (error) {
-      // Handle error
-    }
+    await post(payload);
   };
 
-  return <Button onClick={() => handleClick({ body: body })}>Submit</Button>;
+  return (
+    <Button onClick={() => handleClick()} disabled={!title || !body}>
+      Submit
+    </Button>
+  );
 };

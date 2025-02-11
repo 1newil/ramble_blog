@@ -58,6 +58,10 @@
   }
 }
 
+.CODEMIRROR_CONTAINER {
+  background-color: #0c1017;
+}
+
 @layer base {
   * {
     @apply border-border;
