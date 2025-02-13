@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 export default function MarkdownInputPage() {
   const router = useRouter();
   return (
-    <div className="mx-32 h-screen px-auto mt-4 space-y-4">
+    <div className="mx-32 mb-4 px-auto mt-4 space-y-4">
       <button onClick={() => router.push("/")} className="text-blue-500">
         Back to Home
       </button>

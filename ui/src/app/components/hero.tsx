@@ -14,13 +14,13 @@ export default function Hero() {
   const { theme } = useTheme();
   return (
     <div className="flex items-center justify-center mt-12">
-      <div className="flex flex-row max-w-3xl mx-auto space-x-3 align-center rounded-lg p-12">
+      <div className="flex flex-row max-w-3xl mx-auto space-x-3 align-center rounded-lg p-4">
         <div className="flex flex-col">
           <Image
             alt="an image of a blogging laptop on a desk"
             src="/blogHero.png"
-            width={400}
-            height={475}
+            width={500}
+            height={600}
             className="rounded-lg"
           />
           <span className="text-xs hover:text-blue-600">
