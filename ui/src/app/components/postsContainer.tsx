@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import Hero from "./hero";
+import { useRouter } from "next/navigation";
 
 type Post = {
   _id: string;
@@ -18,6 +20,7 @@ type PostsContainerProps = {
 export default function PostsContainer({ posts }: PostsContainerProps) {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const router = useRouter();
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -25,7 +28,16 @@ export default function PostsContainer({ posts }: PostsContainerProps) {
   if (!mounted) return <div>loading...</div>;
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Latest Blog Posts</h1>
+      <Hero />
+      <div className="flex flex-row justify-between items-center mt-8 mb-4">
+        <h1 className="text-3xl font-bold ">Latest Blog Posts</h1>
+        <button
+          onClick={() => router.push("/markdownEditor")}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1 px-2 rounded"
+        >
+          New Post
+        </button>
+      </div>
       <div className="grid grid-cols-1 gap-4">
         {posts &&
           posts.map((post) => {
@@ -45,7 +57,7 @@ export default function PostsContainer({ posts }: PostsContainerProps) {
                 />
                 <div>
                   <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
-                  <p className="text-gray-500">{createdAtDate}</p>
+                  <p className="text-gray-500">Created: {createdAtDate}</p>
                 </div>
               </div>
             );
