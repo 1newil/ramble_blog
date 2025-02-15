@@ -3,7 +3,14 @@ import BlogPost from "../models/blogpost.js";
 
 const router = express.Router();
 
-router.get("/", async (_, res) => {
+const generateSlug = (title) => {
+  return title
+    .toLowerCase()
+    .replace(/ /g, "-") // Replace spaces with hyphens
+    .replace(/[^\w-]+/g, ""); // Remove special characters
+};
+
+router.get("/getAllPosts", async (_, res) => {
   try {
     const blogPosts = await BlogPost.find();
     res.json(blogPosts);
@@ -12,12 +19,35 @@ router.get("/", async (_, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/getLastPosts", async (req, res) => {
+  try {
+    let { limit } = req.body;
+    const blogPosts = await BlogPost.find()
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    res.json(blogPosts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/post", async (req, res) => {
   console.log(req.body);
   try {
     let { title, markdownContent, thumbnailUrl } = req.body.payload;
-    markdownContent = markdownContent;
-    const newPost = new BlogPost({ title, markdownContent, thumbnailUrl });
+
+    if (!thumbnailUrl) {
+      thumbnailUrl =
+        "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+    }
+
+    const newPost = new BlogPost({
+      title,
+      markdownContent,
+      thumbnailUrl,
+      slug: generateSlug(title),
+    });
+    console.log(newPost);
     await newPost.save();
     res.status(201).json(newPost);
   } catch (err) {
@@ -25,7 +55,34 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.post("/bulkPost", async (req, res) => {
+  try {
+    const posts = req.body;
+    const postsWithSlugs = posts.map((post) => {
+      post.title = post.title.trim();
+      post.markdownContent = post.markdownContent.trim();
+      post.thumbnailUrl = post.thumbnailUrl.trim();
+      post.slug = generateSlug(post.title);
+      return post; // Add this line to return the modified post
+    });
+    const newPosts = await BlogPost.insertMany(postsWithSlugs);
+    res.status(201).json(newPosts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/get/:slug", async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const fetchedPost = await BlogPost.findOne({ slug });
+    res.status(200).json(fetchedPost);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deletedDoc = await BlogPost.findByIdAndDelete(id);
@@ -38,4 +95,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-export default router;
+export default blogPostRouter;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { post } from "@/app/actions/blogActions";
+import { useRouter } from "next/navigation";
 interface SubmitButtonProps {
   body: string;
   title: string;
@@ -16,6 +17,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   setText,
   setTitle,
 }) => {
+  const router = useRouter();
   const handleClick = async () => {
     console.log("body", body);
     if (!body || body.trim() === "") {
@@ -33,6 +35,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
     await post(payload);
     setText("");
     setTitle("");
+    router.push("/");
   };
 
   return (

@@ -1,15 +1,13 @@
-import Markdown from "react-markdown";
-import { getPosts } from "./actions/blogActions";
+// This is a Server Component
+import { getLastPosts } from "@/app/actions/blogActions";
 import PostsContainer from "./components/postsContainer";
-import MarkdownInput from "./components/markdown_input";
-import Hero from "./components/hero";
 
-export default async function Home() {
-  const posts = await getPosts();
-  console.log("posts: ", posts);
+export default async function PostsWrapper() {
+  const initialPosts = await getLastPosts(5); // Default limit is 5
+
   return (
-    <div className="mx-32 h-screen px-auto mt-4 space-y-4">
-      <PostsContainer posts={posts} />
+    <div className="mx-auto">
+      <PostsContainer initialPosts={initialPosts} />
     </div>
   );
 }

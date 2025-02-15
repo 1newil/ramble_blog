@@ -14,7 +14,7 @@ export default function Hero() {
   const { theme } = useTheme();
   return (
     <div className="flex items-center justify-center mt-12">
-      <div className="flex flex-row max-w-3xl mx-auto space-x-3 align-center rounded-lg p-4">
+      <div className="flex flex-row max-w-3xl mx-auto space-x-3 align-center rounded-lg">
         <div className="flex flex-col">
           <Image
             alt="an image of a blogging laptop on a desk"
@@ -23,17 +23,20 @@ export default function Hero() {
             height={600}
             className="rounded-lg"
           />
-          <span className="text-xs hover:text-blue-600">
-            <a href="https://openai.com/index/dall-e-3/" target="_blank">
-              image credit: DALL-E 🖌️
+          <span className="text-xs ">
+            <a
+              href="https://openai.com/index/dall-e-3/"
+              target="_blank"
+              className="hover:text-blue-600"
+            >
+              DALL-E 🖌️
             </a>
           </span>
         </div>
         <div>
           <h1 className="text-2xl font-bold">Welcome to Ramble 📪</h1>
           <p className="text-sm">
-            A place to collect my thoughts on all topics. <br />
-            Enjoy the randomness...
+            A place to collect thoughts on all topics. <br />
           </p>
           <div
             className={`flex space-x-3 mt-4 ml- ${

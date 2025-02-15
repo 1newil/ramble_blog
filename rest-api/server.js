@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import router from "./routes/blogpostRoutes.js";
+import blogPostRouter from "./routes/blogpostRoutes.js";
+
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -23,7 +24,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use("/api/blogs", router);
+app.use("/api/blogs", blogPostRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -6,7 +6,7 @@ import React from "react";
 export default function Footer() {
   return (
     <div
-      className={`bottom-0 left-0 w-full p-4 px-12 transition-colors backdrop-brightness-200`}
+      className={`w-full p-4 px-12 transition-colors backdrop-brightness-200 mt-12`}
     >
       <div className="container mx-auto space-x-2">
         <Link
