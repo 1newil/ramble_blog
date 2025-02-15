@@ -4,6 +4,7 @@ import React from "react";
 import ThemeToggle from "./theme-toggle";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import { TypographyH1 } from "@/components/ui/typography";
 export default function Header() {
   const router = useRouter();
   return (
@@ -15,7 +16,7 @@ export default function Header() {
         className="flex items-center space-x-2"
       >
         <ChatBubbleOvalLeftEllipsisIcon className={`w-8 h-8 rounded-lg`} />
-        <h1 className="text-2xl font-bold">Ramble</h1>
+        <TypographyH1>Ramble</TypographyH1>
       </button>
 
       <div className="flex flex-row space-x-8 items-center">

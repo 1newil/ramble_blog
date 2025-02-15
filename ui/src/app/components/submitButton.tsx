@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { post } from "@/app/actions/blogActions";
 import { useRouter } from "next/navigation";
 interface SubmitButtonProps {
@@ -13,9 +13,9 @@ interface SubmitButtonProps {
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   body,
   title,
-  thumbnailUrl,
   setText,
   setTitle,
+  thumbnailUrl,
 }) => {
   const router = useRouter();
   const handleClick = async () => {

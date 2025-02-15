@@ -3,13 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { getPostBySlug } from "@/app/actions/blogActions";
 import { useParams } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/app/components/ui/card";
-import { Skeleton } from "@/app/components/ui/skeleton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
@@ -18,6 +13,7 @@ import {
   prism,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "@/app/hooks/useTheme";
+import { useRouter } from "next/navigation";
 type Post = {
   _id: string;
   title: string;
@@ -32,6 +28,7 @@ export default function Page() {
   const [post, setPost] = useState<Post>(null);
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
+  const router = useRouter();
   useEffect(() => {
     if (!slug || Array.isArray(slug)) return; // Ensure slug is a valid string
 
@@ -67,6 +64,9 @@ export default function Page() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+      <button onClick={() => router.push("/")} className="text-blue-500 mb-2">
+        Back to Home
+      </button>
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center space-x-4">
@@ -112,6 +112,17 @@ export default function Page() {
                   <code className={`p-1 rounded`} {...props}>
                     {children}
                   </code>
+                );
+              },
+              img({ src, alt }) {
+                return (
+                  <span className="flex justify-center items-center p-2">
+                    <img
+                      src={src || ""}
+                      alt={alt || "Markdown image"}
+                      className="w-96 h-auto rounded-lg shadow-md "
+                    />
+                  </span>
                 );
               },
             }}

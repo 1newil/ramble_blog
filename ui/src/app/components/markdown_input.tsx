@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import CodeMirror from "@uiw/react-codemirror";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { useTheme } from "next-themes";
 import { EditorView } from "@codemirror/view";
 import { githubLight, githubDark } from "@uiw/codemirror-theme-github";
@@ -25,7 +25,7 @@ export default function MarkdownInput() {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const customStyles = EditorView.theme({
     ".cm-activeLine": { backgroundColor: "transparent !important" }, // Removes highlight
     ".cm-gutters": { backgroundColor: "#0d1118" }, // Line number gutter color
@@ -35,20 +35,8 @@ export default function MarkdownInput() {
     setMounted(true);
   }, []);
 
-  async function handleSubmit(formData: FormData) {
-    setStatus("Uploading...");
-    const result = await uploadImage(null, formData);
-
-    if (result.success) {
-      setImageUrl(result.imageUrl);
-      setStatus("Upload successful!");
-    } else {
-      setStatus("there was an error uploading your image");
-    }
-  }
-
   const handleDrop = useCallback(
-    async (event: React.DragEvent<HTMLDivElement>) => {
+    async (event: React.DragEvent<HTMLDivElement>, type: string) => {
       event.preventDefault();
       const file = event.dataTransfer.files[0];
 
@@ -67,7 +55,13 @@ export default function MarkdownInput() {
         const result = await uploadImage(null, formData);
 
         if (result.success) {
-          setText((prev) => prev + `\n\n![Screenshot](${result.imageUrl})\n\n`);
+          if (type === "imageUrl") {
+            setImageUrl(result.imageUrl);
+          } else if (type === "markdownImage") {
+            setText(
+              (prev) => prev + `\n\n![Screenshot](${result.imageUrl})\n\n`
+            );
+          }
         } else {
           console.error("Upload failed:", result);
         }
@@ -90,6 +84,19 @@ export default function MarkdownInput() {
           onChange={(e) => setTitle(e.target.value)}
           className={`border-2 rounded-lg p-2 mb-2 max-w-sm`}
         />
+        <div
+          onDrop={(event) => handleDrop(event, "imageUrl")}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <input
+            type="text"
+            id="ImageUrl"
+            placeholder="Thumbnail Image Url"
+            value={imageUrl || ""}
+            onChange={(e) => setImageUrl(e.target.value)}
+            className={`border-2 rounded-lg p-2 mb-2 max-w-sm`}
+          />
+        </div>
       </div>
       <div
         className={`border-2 rounded-lg shadow-md p-4 flex flex-col overflow-hidden`}
@@ -121,6 +128,7 @@ export default function MarkdownInput() {
             title={title}
             setText={setText}
             setTitle={setTitle}
+            thumbnailUrl={imageUrl}
           />
         </div>
 
@@ -182,7 +190,7 @@ export default function MarkdownInput() {
               className={`w-full overflow-auto min-h-96 ${
                 theme === "dark" ? "CODEMIRROR_CONTAINER" : ""
               }`}
-              onDrop={handleDrop}
+              onDrop={(event) => handleDrop(event, "markdownImage")}
               onDragOver={(e) => e.preventDefault()}
             >
               <CodeMirror

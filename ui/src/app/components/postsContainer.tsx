@@ -3,8 +3,22 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import { getLastPosts } from "@/app/actions/blogActions"; // Import remains
+import { getLastPosts } from "@/app/actions/blogActions";
 import Hero from "./hero";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  TypographyH1,
+  TypographyH2,
+  TypographyP,
+} from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Post = {
   _id: string;
@@ -41,55 +55,67 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
   if (!mounted) return null;
 
   return (
-    <div className="container mx-auto height-full overflow-auto justify-center">
-      <Hero />
-      <div className="flex flex-row justify-between items-center mt-8 mb-4">
-        <h1 className="text-3xl font-bold ">Latest Blog Posts</h1>
-        <section></section>
-        <div className="space-x-3">
-          <button
+    <div className="container mx-auto h-full overflow-auto justify-center px-4">
+      {/* Header */}
+      <div className="flex flex-row justify-between items-center mt-8 mb-6">
+        <TypographyH1>Latest Posts</TypographyH1>
+        <div className="flex space-x-3">
+          <Button
             onClick={() => router.push("/markdownEditor")}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1 px-2 rounded"
+            className="bg-emerald-600 hover:bg-emerald-700"
           >
             New Post
-          </button>
-          <select
-            onChange={(e) => setLimit(parseInt(e.target.value))}
-            value={limit}
+          </Button>
+
+          <Select
+            onValueChange={(value) => setLimit(parseInt(value))}
+            defaultValue={limit.toString()}
           >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-          </select>
+            <SelectTrigger className="w-[100px]">
+              <SelectValue placeholder="Limit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-      <div className="flex flex-col gap-2 ">
-        {posts.map((post) => {
-          const createdAtDate = new Date(post.createdAt).toLocaleDateString();
 
-          return (
-            <div
-              key={post._id}
-              className={`flex flex-row cursor-pointer p-2 shadow space-x-3 justify-start ${
-                theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"
-              }`}
-              onClick={() => router.push(`/blog/${post.slug}`)}
-            >
-              <img
-                src={post.thumbnailUrl}
-                alt="thumbnail"
-                className="w-12 h-12 object-cover rounded-lg"
-              />
-              <div>
-                <h1 className="text-xl font-bold mb-1">{post.title}</h1>
-                <p className="text-gray-500 text-sm">
-                  Created: {createdAtDate}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/* Posts List */}
+      {posts.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {posts.map((post) => {
+            const createdAtDate = new Date(post.createdAt).toLocaleDateString();
+            return (
+              <Card
+                key={post._id}
+                className={`cursor-pointer transition-all hover:shadow-lg ${
+                  theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"
+                }`}
+                onClick={() => router.push(`/blog/${post.slug}`)}
+              >
+                <CardContent className="flex flex-row p-4 items-center space-x-4">
+                  <img
+                    src={post.thumbnailUrl}
+                    alt="thumbnail"
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                  <div>
+                    <TypographyH2>{post.title}</TypographyH2>
+                    <span className="text-sm">Created: {createdAtDate}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center h-96 space-y-6">
+          <span className="text-6xl">🏄‍♀️</span>
+          <TypographyH1>No posts found</TypographyH1>
+        </div>
+      )}
     </div>
   );
 }
