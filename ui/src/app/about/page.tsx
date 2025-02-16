@@ -26,13 +26,15 @@ const text = `> "Blessed are the curious, for they shall have adventures."
 > — Jack London  
 
 > "Be curious, not judgmental."  
-> — Walt Whitman`;
+> — Walt Whitman
+
+`;
 
 export default function Page() {
   const { theme } = useTheme();
 
   return (
-    <div className="flex flex-col min-h-svh md:mx-32 px-4">
+    <div className="flex flex-col min-h-svh md:mx-32 px-4 py-8">
       <div className="container mx-auto min-w-[280px] max-w-[625px]">
         <Breadcrumb>
           <BreadcrumbList>
