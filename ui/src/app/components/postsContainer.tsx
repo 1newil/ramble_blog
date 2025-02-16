@@ -92,7 +92,7 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
       </div>
 
       {/* Posts List */}
-      {posts.blogPosts.length > 0 ? (
+      {posts?.blogPosts?.length > 0 ? (
         <div className="flex flex-col gap-4">
           {posts.blogPosts.map((post) => {
             const createdAtDate = new Date(post.createdAt).toLocaleDateString();
