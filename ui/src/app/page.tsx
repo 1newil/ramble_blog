@@ -5,7 +5,7 @@ import Hero from "./components/hero";
 
 export default async function PostsWrapper() {
   const initialPosts = await getLastPosts(5); // Default limit is 5
-
+  if (!initialPosts) return <div>Fetching posts failed</div>;
   return (
     <div className="mx-auto">
       <Hero />
