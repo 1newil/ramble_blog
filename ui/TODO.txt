@@ -5,7 +5,7 @@ markdown editor
 
 view one blog 
     - dynamic route DONE
-    - breadcrumbs 
+    - breadcrumbs DONE
     - comments
 
 view all

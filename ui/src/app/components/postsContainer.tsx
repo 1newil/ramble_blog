@@ -61,7 +61,7 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
     <div className="container mx-auto md:px-8 min-w-[280px] max-w-[625px]">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-6 md:mt-8 mb-6 space-y-4 md:space-y-0">
-        <TypographyH1>Latest Posts</TypographyH1>
+        <h1 className="text-xl">Latest Posts</h1>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
           {process.env.NEXT_PUBLIC_MODE === "ADMIN" && (
             <Button

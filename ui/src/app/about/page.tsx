@@ -22,12 +22,11 @@ import {
 const text = `> "Blessed are the curious, for they shall have adventures."  
 > — Lovelle Drachman  
 
-> "You can’t wait for inspiration. You have to go after it with a club."  
-> — Jack London  
+> "If you think you are too small to make an impact, try going to bed with a mosquito." 
+> — Anita Borg 
 
-> "Be curious, not judgmental."  
-> — Walt Whitman
-
+> - "Imagination is the discovering faculty, pre-eminently. It is that which penetrates into the unseen worlds around us, the worlds of science."
+> — Ada Lovelace
 `;
 
 export default function Page() {

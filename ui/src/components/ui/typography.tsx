@@ -1,5 +1,5 @@
 export function TypographyH1({ children }: { children: React.ReactNode }) {
-  return <h1 className="scroll-m-20 md:text-2xl lg:text-3xl">{children}</h1>;
+  return <h1 className="scroll-m-20 md:text-3xl lg:text-3xl">{children}</h1>;
 }
 
 export function TypographyP({ children }: { children: React.ReactNode }) {
