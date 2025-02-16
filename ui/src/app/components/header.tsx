@@ -5,6 +5,9 @@ import ThemeToggle from "./theme-toggle";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { TypographyH1 } from "@/components/ui/typography";
+
+// another comment
+
 export default function Header() {
   const router = useRouter();
   return (
