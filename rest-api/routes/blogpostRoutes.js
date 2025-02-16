@@ -27,7 +27,7 @@ router.post("/getLastPosts", async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
-    const totalItems = await BlogPost.countDocuments();
+    const totalPosts = await BlogPost.countDocuments();
     const totalPages = Math.ceil(totalItems / limit);
     res.json({
       blogPosts,
