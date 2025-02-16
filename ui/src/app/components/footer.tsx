@@ -3,6 +3,8 @@
 import Link from "next/link";
 import React from "react";
 
+// added a comment
+
 export default function Footer() {
   return (
     <footer className="w-full mt-auto p-4 px-12 shadow-md">
