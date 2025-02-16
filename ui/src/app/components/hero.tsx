@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTheme } from "next-themes";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,7 +16,6 @@ const icons = [
 ];
 
 export default function Hero() {
-  const { theme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {

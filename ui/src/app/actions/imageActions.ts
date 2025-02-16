@@ -12,7 +12,7 @@ const s3 = new S3Client({
   },
 });
 
-export async function uploadImage(prevState: any, formData: FormData) {
+export async function uploadImage(formData: FormData) {
   const file = formData.get("file") as File;
   if (!file) return { error: "No file uploaded." };
 

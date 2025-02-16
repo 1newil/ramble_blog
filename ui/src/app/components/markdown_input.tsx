@@ -30,7 +30,7 @@ export default function MarkdownInput() {
     ".cm-activeLine": { backgroundColor: "transparent !important" }, // Removes highlight
     ".cm-gutters": { backgroundColor: "#0d1118" }, // Line number gutter color
   });
-  const [status, setStatus] = useState<string | null>(null);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -52,7 +52,7 @@ export default function MarkdownInput() {
         formData.append("file", renamedFile);
 
         // Upload to S3 using the Next.js Server Action
-        const result = await uploadImage(null, formData);
+        const result = await uploadImage(formData);
 
         if (result.success) {
           if (type === "imageUrl") {

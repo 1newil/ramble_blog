@@ -4,13 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { getLastPosts } from "@/app/actions/blogActions";
-import Hero from "./hero";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  TypographyH1,
-  TypographyH2,
-  TypographyP,
-} from "@/components/ui/typography";
+import { TypographyH1, TypographyH2 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -60,13 +55,14 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
       <div className="flex flex-row justify-between items-center mt-8 mb-6">
         <TypographyH1>Latest Posts</TypographyH1>
         <div className="flex space-x-3">
-          <Button
-            onClick={() => router.push("/markdownEditor")}
-            className="bg-emerald-600 hover:bg-emerald-700"
-          >
-            New Post
-          </Button>
-
+          {process.env.mode === "admin" && (
+            <Button
+              onClick={() => router.push("/markdownEditor")}
+              className="bg-emerald-600 hover:bg-emerald-700"
+            >
+              New Post
+            </Button>
+          )}
           <Select
             onValueChange={(value) => setLimit(parseInt(value))}
             defaultValue={limit.toString()}

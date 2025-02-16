@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
+import { payload } from "../types/types";
 const apiURL = process.env.API_URL || "http://localhost:4000/api/blogs";
 
-export async function post(payload: any) {
+export async function post(payload: payload) {
   try {
     const response = await fetch(`${apiURL}/post`, {
       method: "POST",

@@ -37,7 +37,7 @@ export default function Page() {
         const data = await getPostBySlug(slug);
         setPost(data);
       } catch (error) {
-        setPost(null);
+        setPost(error as Post);
       } finally {
         setLoading(false);
       }
