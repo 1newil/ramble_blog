@@ -137,7 +137,7 @@ export default function MarkdownInput() {
           {isPreviewMode ? (
             mounted ? (
               <div
-                className={`markdown p-4 rounded-md w-full `}
+                className={`container markdown mx-auto p-4 rounded-md w-full md:px-8 min-w-[280px] max-w-[625px]`}
                 style={{ maxHeight: "100%" }}
               >
                 <ReactMarkdown
@@ -173,7 +173,7 @@ export default function MarkdownInput() {
                         <img
                           src={src || ""}
                           alt={alt || "Markdown image"}
-                          className="w-64 h-auto rounded-lg shadow-md"
+                          className="w-96 h-auto rounded-lg shadow-md"
                         />
                       );
                     },

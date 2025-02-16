@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { payload } from "../types/types";
-const apiURL = process.env.API_URL || "http://localhost:4000/api/blogs";
+const apiURL = process.env.API_URL || "http://localhost:3001/api/blogs";
 
 export async function post(payload: payload) {
   try {
@@ -21,7 +21,7 @@ export async function post(payload: payload) {
   }
 }
 
-export async function getLastPosts(limit: number) {
+export async function getLastPosts(page: number, limit: number) {
   try {
     const response = await fetch(`${apiURL}/getLastPosts`, {
       method: "POST",
@@ -29,6 +29,7 @@ export async function getLastPosts(limit: number) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        page: page,
         limit: limit,
       }),
     });

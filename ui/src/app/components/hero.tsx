@@ -10,9 +10,17 @@ import { Button } from "@/components/ui/button";
 import { TypographyH1 } from "@/components/ui/typography";
 
 const icons = [
-  { name: "linkedin", icon: FaLinkedin, url: "https://www.linkedin.com/" },
-  { name: "github", icon: FaGithub, url: "https://www.github.com/" },
-  { name: "x", icon: FaXTwitter, url: "https://www.x.com/" },
+  {
+    name: "linkedin",
+    icon: FaLinkedin,
+    url: "https://www.linkedin.com/in/alexhong240/",
+  },
+  {
+    name: "github",
+    icon: FaGithub,
+    url: "https://github.com/alexhong3000/ramble_blog",
+  },
+  { name: "x", icon: FaXTwitter, url: "https://x.com/vercel" },
 ];
 
 export default function Hero() {
@@ -25,15 +33,14 @@ export default function Hero() {
   if (!mounted) return null;
 
   return (
-    <div className="flex items-center justify-center mt-12">
-      <Card className="max-w-3xl mx-auto rounded-lg p-6 shadow-md">
+    <div className="flex flex-col md:flex-row items-center justify-center mt-12">
+      <Card className="max-w-2xl mx-auto rounded-lg p-6 shadow-md">
         <CardContent className="flex flex-col md:flex-row items-center gap-6">
           {/* Text Section */}
-          <div className="flex flex-col md:w-1/2">
-            <TypographyH1>Welcome to Ramble 📪</TypographyH1>
+          <div className="md:w-3/4 font-bold">
+            <TypographyH1>Ramble 📪</TypographyH1>
             <p className="text-sm mb-6 mt-2">
-              A platform for sharing and exploring{" "}
-              <span className="text-xs">my</span> ideas on various subjects.
+              A platform for sharing and exploring my ideas on various subjects.
             </p>
 
             {/* Social Icons */}
@@ -68,7 +75,7 @@ export default function Hero() {
               alt="An image of a laptop on a desk"
               src="/blogHero.png"
               className="rounded-lg"
-              width={300}
+              width={250}
               height={200}
             />
             <small className="text-xxs font-medium justify-end">

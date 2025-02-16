@@ -9,7 +9,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <header
-      className={`mx-auto px-6 py-6 flex items-center justify-between transition-colors backdrop-brightness-200`}
+      className={`mx-auto mt-auto px-6 py-6 flex items-center justify-between transition-colors backdrop-brightness-200`}
     >
       <button
         onClick={() => router.push("/")}
@@ -26,9 +26,6 @@ export default function Header() {
           </Link>
           <Link href="/about" className={`hover:underline`}>
             About
-          </Link>
-          <Link href="/contact" className={` hover:underline`}>
-            Contact
           </Link>
         </nav>
         <ThemeToggle />

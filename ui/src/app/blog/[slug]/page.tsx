@@ -3,17 +3,25 @@
 import React, { useEffect, useState } from "react";
 import { getPostBySlug } from "@/app/actions/blogActions";
 import { useParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import {
   atomDark,
   prism,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "@/app/hooks/useTheme";
-import { useRouter } from "next/navigation";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
 type Post = {
   _id: string;
   title: string;
@@ -28,7 +36,6 @@ export default function Page() {
   const [post, setPost] = useState<Post>(null);
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
-  const router = useRouter();
   useEffect(() => {
     if (!slug || Array.isArray(slug)) return; // Ensure slug is a valid string
 
@@ -63,31 +70,45 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <button onClick={() => router.push("/")} className="text-blue-500 mb-2">
-        Back to Home
-      </button>
-      <Card className="shadow-lg">
-        <CardHeader>
-          <div className="flex items-center space-x-4">
-            <img
-              src={post.thumbnailUrl}
-              alt={post.title}
-              width={96}
-              height={96}
-              className="rounded-lg object-cover"
-            />
-            <div>
-              <CardTitle className="text-3xl font-bold">{post.title}</CardTitle>
-              <span className="text-sm">
-                {new Date(post.createdAt).toLocaleDateString()}
-              </span>
+    <div className=" min-h-screen md:mx-32 px-4 py-8">
+      <div className="container mx-auto min-w-[280px] max-w-[625px]">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href={`/blog/${slug}`}>
+                {post.title}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Card className="shadow-lg mt-1">
+          <CardHeader>
+            <div className="flex items-center space-x-4">
+              <img
+                src={post.thumbnailUrl}
+                alt={post.title}
+                width={48}
+                height={48}
+                className="rounded-lg object-cover"
+              />
+              <div>
+                <CardTitle className="text-2xl font-bold">
+                  {post.title}
+                </CardTitle>
+                <span className="text-sm">
+                  {new Date(post.createdAt).toLocaleDateString()}
+                </span>
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent>
+          </CardHeader>
+        </Card>
+        <div className="markdown leading-snug font-medium mt-4 md:mx-12">
           <ReactMarkdown
-            remarkPlugins={[remarkBreaks]}
+            remarkPlugins={[remarkBreaks, remarkGfm]}
             components={{
               code({ className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
@@ -109,28 +130,26 @@ export default function Page() {
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 ) : (
-                  <code className={`p-1 rounded`} {...props}>
+                  <code className="p-1 rounded" {...props}>
                     {children}
                   </code>
                 );
               },
               img({ src, alt }) {
                 return (
-                  <span className="flex justify-center items-center p-2">
-                    <img
-                      src={src || ""}
-                      alt={alt || "Markdown image"}
-                      className="w-96 h-auto rounded-lg shadow-md "
-                    />
-                  </span>
+                  <img
+                    src={src || ""}
+                    alt={alt || "Markdown image"}
+                    className="w-96 h-auto rounded-lg shadow-md"
+                  />
                 );
               },
             }}
           >
             {post.markdownContent}
           </ReactMarkdown>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

@@ -131,3 +131,29 @@
     --chart-5: #d1e0a3;
   }
 }
+.font-inconsolata {
+  font-family: var(--font-inconsolata);
+}
+
+/* Define font weight classes if needed */
+.font-thin {
+  font-weight: 200;
+}
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-extrabold {
+  font-weight: 800;
+}

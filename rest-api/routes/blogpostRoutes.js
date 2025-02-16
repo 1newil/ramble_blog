@@ -21,11 +21,20 @@ router.get("/getAllPosts", async (_, res) => {
 
 router.post("/getLastPosts", async (req, res) => {
   try {
-    let { limit } = req.body;
+    let { page, limit } = req.body;
+    const skip = (page - 1) * limit;
     const blogPosts = await BlogPost.find()
       .sort({ createdAt: -1 })
+      .skip(skip)
       .limit(limit);
-    res.json(blogPosts);
+    const totalItems = await BlogPost.countDocuments();
+    const totalPages = Math.ceil(totalItems / limit);
+    res.json({
+      blogPosts,
+      currentPage: page,
+      totalPages,
+      totalPosts,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

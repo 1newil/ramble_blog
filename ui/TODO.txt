@@ -17,16 +17,16 @@ blogs
     - add tags to model
 
 static pages 
-    - about 
-    - contact
+    - about DONE
+    - contact (REMOVED)
 
-auth 
+auth (OPTIONAL)
     - admin can access markdown editor 
     - guests can sign up to comment
 
-misc 
+misc DONE
     - favicon 
     - page title
 
-deployment 
+deployment DONE
     - deploy the damn thing
