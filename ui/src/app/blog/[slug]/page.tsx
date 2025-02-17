@@ -88,11 +88,7 @@ export default function Page() {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href={`/blog/${slug}`}>
-                {post.title}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+            <BreadcrumbItem>{post.title}</BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <Card className="shadow-lg mt-1">
