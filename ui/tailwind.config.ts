@@ -82,6 +82,7 @@ export default {
         xxs: ["0.50rem", { lineHeight: "1rem" }],
         xs: ["0.65rem", { lineHeight: "1.25rem" }],
         xxxl: ["5.25rem", { lineHeight: "2.75rem" }],
+        msm: ["0.75rem", { lineHeight: "1.25rem" }],
       },
       fontFamily: {
         sans: ["inconsolata", "sans-serif"],

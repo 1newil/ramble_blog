@@ -113,7 +113,7 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
                             ? post.tags?.map((tag, index) => (
                                 <div
                                   key={index}
-                                  className={`rounded-full border px-2 mr-2 ${tag.color}`}
+                                  className={`rounded-full text-msm border px-2 mr-2 ${tag.color}`}
                                 >
                                   {tag.tagText}
                                 </div>
