@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
+import { useSearchParams } from "next/navigation";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import {
   atomDark,
@@ -37,10 +38,12 @@ type Post = {
 
 export default function Page() {
   const { slug } = useParams();
+  const searchParams = useSearchParams();
   const [post, setPost] = useState<Post>(null);
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
   const router = useRouter();
+  const fromViewAll = searchParams.get("from") === "viewAll";
   useEffect(() => {
     if (!slug || Array.isArray(slug)) return; // Ensure slug is a valid string
 
@@ -80,7 +83,9 @@ export default function Page() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              <BreadcrumbLink href={fromViewAll ? "/viewAll" : "/"}>
+                {fromViewAll ? "View All Posts" : "Home"}
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import { TypographyH1 } from "@/components/ui/typography";
+import { useRouter } from "next/navigation";
 
 const icons = [
   {
@@ -25,7 +26,7 @@ const icons = [
 
 export default function Hero() {
   const [mounted, setMounted] = React.useState(false);
-
+  const router = useRouter();
   React.useEffect(() => {
     setMounted(true);
   }, []);
@@ -39,12 +40,16 @@ export default function Hero() {
           {/* Text Section */}
           <div className="md:w-3/4 font-bold">
             <TypographyH1>Ramble 📪</TypographyH1>
-            <p className="text-md mb-6 mt-2">
+            <p className="text-md mb-4 mt-2">
               A platform for sharing and exploring my ideas on various subjects.
             </p>
 
+            <Button variant="secondary" onClick={() => router.push("/viewAll")}>
+              View Posts
+            </Button>
+
             {/* Social Icons */}
-            <div className="flex">
+            <div className="flex mt-2">
               {icons.map((icon) => {
                 const Icon = icon.icon;
                 return (
