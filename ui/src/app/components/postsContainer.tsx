@@ -14,22 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-type Post = {
-  _id: string;
-  title: string;
-  markdownContent: string;
-  thumbnailUrl: string;
-  slug: string;
-  createdAt: string;
-};
-
-type Posts = {
-  blogPosts: Post[];
-  currentPage: number;
-  totalPages: number;
-  totalPosts: number;
-};
+import { Posts } from "@/app/types/types";
 
 type PostsContainerProps = {
   initialPosts: Posts;
@@ -99,22 +84,40 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
             return (
               <Card
                 key={post._id}
-                className={`cursor-pointer transition-all hover:shadow-lg ${
+                className={`cursor-pointer p-4 transition-all hover:shadow-lg ${
                   theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"
                 }`}
                 onClick={() => router.push(`/blog/${post.slug}`)}
               >
-                <CardContent className="flex flex-col sm:flex-row p-4 items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 min-h-[100px]">
-                  <img
-                    src={post.thumbnailUrl}
-                    alt="thumbnail"
-                    className="w-20 h-20 sm:w-16 sm:h-16 object-cover rounded-lg min-w-[60px] min-h-[60px]"
-                  />
-                  <div className="text-center sm:text-left w-full">
-                    <TypographyH2>{post.title}</TypographyH2>
-                    <span className="text-sm text-gray-500">
-                      Created: {createdAtDate}
-                    </span>
+                <CardContent>
+                  <div className="flex flex-row space-x-3">
+                    <img
+                      src={post.thumbnailUrl}
+                      alt="thumbnail"
+                      className="w-20 h-20 sm:w-16 sm:h-16 object-cover rounded-lg min-w-[60px] min-h-[60px]"
+                    />
+
+                    <div className="w-full">
+                      <TypographyH2>{post.title}</TypographyH2>
+
+                      <div className="flex flex-row justify-between items-baseline align-baseline">
+                        <span className="text-sm text-gray-500">
+                          Created: {createdAtDate}
+                        </span>
+                        <div className="flex flex-wrap">
+                          {post.tags?.length > 0
+                            ? post.tags?.map((tag, index) => (
+                                <div
+                                  key={index}
+                                  className={`rounded-full border px-2 mr-2 ${tag.color}`}
+                                >
+                                  {tag.tagText}
+                                </div>
+                              ))
+                            : "no tags added"}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

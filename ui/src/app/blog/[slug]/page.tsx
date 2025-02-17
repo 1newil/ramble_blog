@@ -21,6 +21,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Tag } from "@/app/types/types";
+import { useRouter } from "next/navigation";
 
 type Post = {
   _id: string;
@@ -29,6 +31,7 @@ type Post = {
   thumbnailUrl: string;
   slug: string;
   createdAt: string;
+  tags: Tag[];
 } | null;
 
 export default function Page() {
@@ -36,6 +39,7 @@ export default function Page() {
   const [post, setPost] = useState<Post>(null);
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
+  const router = useRouter();
   useEffect(() => {
     if (!slug || Array.isArray(slug)) return; // Ensure slug is a valid string
 
@@ -95,13 +99,32 @@ export default function Page() {
                 height={48}
                 className="rounded-lg object-cover"
               />
-              <div>
+              <div className="w-full">
                 <CardTitle className="text-2xl font-bold">
                   {post.title}
                 </CardTitle>
-                <span className="text-sm">
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </span>
+                <button
+                  onClick={() => router.push(`/markdownEditor/${post.slug}`)}
+                >
+                  edit
+                </button>
+                <div className="flex flex-row justify-between items-baseline align-baseline">
+                  <span className="text-sm">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
+                  <div className="flex flex-wrap">
+                    {post.tags.length > 0
+                      ? post.tags.map((tag, index) => (
+                          <div
+                            key={index}
+                            className={`rounded-full border px-2 mr-2 mb-2 ${tag.color}`}
+                          >
+                            {tag.tagText}
+                          </div>
+                        ))
+                      : "no tags added"}
+                  </div>
+                </div>
               </div>
             </div>
           </CardHeader>

@@ -14,7 +14,7 @@ home page
     - limit blog retrieval to latest 10 (or 5?) DONE
 
 blogs 
-    - add tags to model
+    - add tags to model DONE
 
 static pages 
     - about DONE

@@ -39,7 +39,7 @@ export default function Hero() {
           {/* Text Section */}
           <div className="md:w-3/4 font-bold">
             <TypographyH1>Ramble 📪</TypographyH1>
-            <p className="text-sm mb-6 mt-2">
+            <p className="text-md mb-6 mt-2">
               A platform for sharing and exploring my ideas on various subjects.
             </p>
 

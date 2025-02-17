@@ -23,6 +23,15 @@ const BlogPostSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  tags: {
+    type: [
+      {
+        tagText: String,
+        color: String,
+      },
+    ],
+    required: false,
+  },
 });
 
 export default mongoose.model("BlogPost", BlogPostSchema);

@@ -43,7 +43,7 @@ router.post("/getLastPosts", async (req, res) => {
 router.post("/post", async (req, res) => {
   console.log(req.body);
   try {
-    let { title, markdownContent, thumbnailUrl } = req.body.payload;
+    let { title, markdownContent, thumbnailUrl, tags } = req.body.payload;
 
     if (!thumbnailUrl) {
       thumbnailUrl =
@@ -55,6 +55,7 @@ router.post("/post", async (req, res) => {
       markdownContent,
       thumbnailUrl,
       slug: generateSlug(title),
+      tags,
     });
     console.log(newPost);
     await newPost.save();
@@ -86,6 +87,21 @@ router.get("/get/:slug", async (req, res) => {
     const slug = req.params.slug;
     const fetchedPost = await BlogPost.findOne({ slug });
     res.status(200).json(fetchedPost);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put("/update/:slug", async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const post = req.body;
+    console.log("post", post);
+    const updatedPost = await BlogPost.updateOne({ slug: slug }, post);
+    if (!updatedPost) {
+      res.status(404).json({ message: `document with slug ${slug} not found` });
+    }
+    res.json({ message: `document ${slug} updated successfully` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

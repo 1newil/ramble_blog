@@ -19,12 +19,7 @@ import { languages } from "@codemirror/language-data";
 import remarkGfm from "remark-gfm";
 import { uploadImage } from "../actions/imageActions";
 import { Tag } from "../types/types";
-import { useSearchParams } from "next/navigation";
 export default function MarkdownInput() {
-  const searchParams = useSearchParams();
-
-  const slug = searchParams.get("slug");
-  console.log(slug);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [isPreviewMode, setIsPreviewMode] = useState(false);

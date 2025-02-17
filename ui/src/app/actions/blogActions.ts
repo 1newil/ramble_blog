@@ -14,6 +14,7 @@ export async function post(payload: payload) {
       },
     });
     const data = await response.json();
+    console.log(data);
     revalidatePath("/");
     return data;
   } catch (error) {

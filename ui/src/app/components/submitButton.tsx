@@ -2,12 +2,15 @@ import React from "react";
 import { Button } from "../../components/ui/button";
 import { post } from "@/app/actions/blogActions";
 import { useRouter } from "next/navigation";
+import { Tag } from "@/app/types/types";
+
 interface SubmitButtonProps {
   body: string;
   title: string;
   thumbnailUrl?: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  tags: Tag[];
 }
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
@@ -16,6 +19,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   setText,
   setTitle,
   thumbnailUrl,
+  tags,
 }) => {
   const router = useRouter();
   const handleClick = async () => {
@@ -27,6 +31,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
     const payload = {
       title: title,
       markdownContent: body,
+      tags,
       thumbnailUrl:
         thumbnailUrl ||
         "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=",

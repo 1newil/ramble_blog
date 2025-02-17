@@ -19,7 +19,7 @@ export async function uploadImage(formData: FormData) {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const fileKey = `uploads/${randomUUID()}-${file.name}`;
+    const fileKey = `uploads/${file.name}`;
 
     const uploadParams = {
       Bucket: process.env.S3_BUCKET_NAME!,
