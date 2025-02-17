@@ -19,12 +19,12 @@ import { languages } from "@codemirror/language-data";
 import remarkGfm from "remark-gfm";
 import { uploadImage } from "../actions/imageActions";
 import { Tag } from "../types/types";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
+import { getPostBySlug } from "../actions/blogActions";
+import { EditButton } from "./editButton";
+import { DeleteButton } from "./deleteButton";
 export default function MarkdownInput() {
-  const searchParams = useSearchParams();
-
-  const slug = searchParams.get("slug");
-  console.log(slug);
+  const { slug } = useParams();
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -47,6 +47,22 @@ export default function MarkdownInput() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!slug) return;
+    const fetchPostBySlug = async () => {
+      try {
+        const data = await getPostBySlug(Array.isArray(slug) ? slug[0] : slug);
+        setText(data.markdownContent);
+        setTitle(data.title);
+        setImageUrl(data.thumbnailUrl);
+        setTags(data.tags);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (slug) fetchPostBySlug();
+  }, [slug]);
 
   const handleDrop = useCallback(
     async (event: React.DragEvent<HTMLDivElement>, type: string) => {
@@ -225,14 +241,28 @@ export default function MarkdownInput() {
               Preview
             </Button>
           </div>
-          <SubmitButton
-            body={text}
-            title={title}
-            setText={setText}
-            setTitle={setTitle}
-            thumbnailUrl={imageUrl}
-            tags={tags}
-          />
+          {slug ? (
+            <div>
+              <EditButton
+                body={text}
+                title={title}
+                setText={setText}
+                setTitle={setTitle}
+                thumbnailUrl={imageUrl}
+                tags={tags}
+                slug={Array.isArray(slug) ? slug[0] : (slug as string)}
+              />
+            </div>
+          ) : (
+            <SubmitButton
+              body={text}
+              title={title}
+              setText={setText}
+              setTitle={setTitle}
+              thumbnailUrl={imageUrl}
+              tags={tags}
+            />
+          )}
         </div>
 
         {/* Content Section */}
@@ -315,6 +345,13 @@ export default function MarkdownInput() {
           )}
         </div>
       </div>
+      {slug && (
+        <div className="flex justify-end mt-2">
+          <DeleteButton
+            slug={Array.isArray(slug) ? slug[0] : (slug as string)}
+          />
+        </div>
+      )}
     </div>
   );
 }

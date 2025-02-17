@@ -22,6 +22,35 @@ export async function post(payload: payload) {
   }
 }
 
+export async function updateBySlug(payload: payload, slug: string) {
+  console.log("slug: ", slug);
+
+  try {
+    const updatedObject = {
+      title: payload.title,
+      markdownContent: payload.markdownContent,
+      tags: {
+        tagText: "t1123",
+        color: "bg-green-600 text-white",
+      },
+    };
+    console.log("payload: ", updatedObject);
+    const response = await fetch(`${apiURL}/update/${slug}`, {
+      method: "PUT",
+      body: JSON.stringify({ payload }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    revalidatePath("/");
+    return data;
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+}
+
 export async function getLastPosts(page: number, limit: number) {
   try {
     const response = await fetch(`${apiURL}/getLastPosts`, {
@@ -35,7 +64,7 @@ export async function getLastPosts(page: number, limit: number) {
       }),
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Error: ", error);
@@ -52,9 +81,9 @@ export async function getPostBySlug(slug: string) {
   }
 }
 
-export async function deletePost(id: string) {
+export async function deletePost(slug: string) {
   try {
-    const response = await fetch(`${apiURL}/delete/${id}`, {
+    const response = await fetch(`${apiURL}/delete/${slug}`, {
       method: "DELETE",
     });
     const data = await response.json();

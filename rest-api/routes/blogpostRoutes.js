@@ -97,7 +97,7 @@ router.put("/update/:slug", async (req, res) => {
     const slug = req.params.slug;
     const post = req.body;
     console.log("post", post);
-    const updatedPost = await BlogPost.updateOne({ slug: slug }, post);
+    const updatedPost = await BlogPost.updateOne({ slug: slug }, post.payload);
     if (!updatedPost) {
       res.status(404).json({ message: `document with slug ${slug} not found` });
     }
@@ -107,14 +107,14 @@ router.put("/update/:slug", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:slug", async (req, res) => {
   try {
-    const id = req.params.id;
-    const deletedDoc = await BlogPost.findByIdAndDelete(id);
+    const slug = req.params.slug;
+    const deletedDoc = await BlogPost.deleteOne({ slug: slug });
     if (!deletedDoc) {
-      res.status(404).json({ message: `document with id ${id} not found` });
+      res.status(404).json({ message: `document with slug ${slug} not found` });
     }
-    res.json({ message: `document ${id} deleted successfully` });
+    res.json({ message: `document ${slug} deleted successfully` });
   } catch (err) {
     res.status(500).json({ message: "error deleting document" });
   }

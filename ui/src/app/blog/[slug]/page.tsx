@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Tag } from "@/app/types/types";
 import { useRouter } from "next/navigation";
+import { FaEdit } from "react-icons/fa";
 
 type Post = {
   _id: string;
@@ -100,14 +101,21 @@ export default function Page() {
                 className="rounded-lg object-cover"
               />
               <div className="w-full">
-                <CardTitle className="text-2xl font-bold">
-                  {post.title}
-                </CardTitle>
-                <button
-                  onClick={() => router.push(`/markdownEditor/${post.slug}`)}
-                >
-                  edit
-                </button>
+                <div className="flex flex-row space-x-3 items-baseline">
+                  <CardTitle className="text-2xl font-bold">
+                    {post.title}
+                  </CardTitle>
+                  {process.env.NEXT_PUBLIC_MODE === "ADMIN" && (
+                    <button
+                      onClick={() =>
+                        router.push(`/markdownEditor/${post.slug}`)
+                      }
+                      className="text-sm text-blue-500 hover:underline"
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                </div>
                 <div className="flex flex-row justify-between items-baseline align-baseline">
                   <span className="text-sm">
                     {new Date(post.createdAt).toLocaleDateString()}
