@@ -25,6 +25,9 @@ export default function Header() {
           <Link href="/" className={`hover:underline`}>
             Home
           </Link>
+          <Link href="/viewAll" className={`hover:underline`}>
+            Posts
+          </Link>
           <Link href="/about" className={`hover:underline`}>
             About
           </Link>
