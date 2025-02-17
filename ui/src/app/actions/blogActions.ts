@@ -57,6 +57,7 @@ export async function getLastPosts(page: number, limit: number) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        cache: "no-store",
       },
       body: JSON.stringify({
         page: page,
