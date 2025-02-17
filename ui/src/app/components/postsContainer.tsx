@@ -27,7 +27,9 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const [mounted, setMounted] = useState(false);
-
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const fetchPosts = async () => {
       const data = await getLastPosts(page, limit);
@@ -36,9 +38,12 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
     fetchPosts();
   }, [page, limit]);
 
+  // Ensure page number remains valid when limit changes
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (posts.totalPages > 0 && page > posts.totalPages) {
+      setPage(posts.totalPages);
+    }
+  }, [posts.totalPages]);
 
   if (!mounted) return null;
 
@@ -58,10 +63,9 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
           )}
           <Select
             onValueChange={(value) => {
-              setLimit(parseInt(value));
-              if (page === posts.totalPages) {
-                setPage(posts.currentPage - 1);
-              }
+              const newLimit = parseInt(value);
+              setLimit(newLimit);
+              setPage(1); // Reset to first page when limit changes
             }}
             defaultValue={limit.toString()}
           >
@@ -125,27 +129,23 @@ export default function PostsContainer({ initialPosts }: PostsContainerProps) {
           })}
           <div className="flex flex-row justify-between items-center space-x-2 mt-2 mx-2">
             <div className="space-x-2">
-              {page > 1 && (
-                <Button
-                  onClick={() => {
-                    setPage(page - 1);
-                  }}
-                >
-                  prev
-                </Button>
-              )}
-              {page < posts.totalPages && (
-                <Button
-                  onClick={() => {
-                    setPage(page + 1);
-                  }}
-                >
-                  next
-                </Button>
-              )}
+              <Button
+                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                disabled={page <= 1}
+              >
+                Prev
+              </Button>
+              <Button
+                onClick={() =>
+                  setPage((prev) => Math.min(posts.totalPages, prev + 1))
+                }
+                disabled={page >= posts.totalPages || posts.totalPages === 0}
+              >
+                Next
+              </Button>
             </div>
             <span>
-              Page: {page} of {posts.totalPages}
+              Page: {page} of {posts.totalPages > 0 ? posts.totalPages : 1}
             </span>
           </div>
         </div>
