@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { Providers } from "@/app/providers";
+import { Analytics } from "@vercel/analytics/react";
 const inconsolata = Inconsolata({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   variable: "--font-crimson-text",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           {children}
+          <Analytics />
           <Footer />
         </Providers>
       </body>

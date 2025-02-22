@@ -25,6 +25,7 @@
     "@uiw/codemirror-theme-copilot": "^4.23.8",
     "@uiw/codemirror-theme-github": "^4.23.8",
     "@uiw/react-codemirror": "^4.23.8",
+    "@vercel/analytics": "^1.5.0",
     "character-entities-legacy": "^3.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
